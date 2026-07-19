@@ -83,8 +83,7 @@ impl<H> TemporalCohort<H> {
             .filter(|s| s.wall_time.is_some())
             .min_by_key(|s| {
                 let wt = s.wall_time.unwrap();
-                let delta = (wt.secs - t.secs).unsigned_abs();
-                delta
+                (wt.secs - t.secs).unsigned_abs()
             })
     }
 

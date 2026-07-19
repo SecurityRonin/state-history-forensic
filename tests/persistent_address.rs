@@ -152,7 +152,7 @@ fn decode_never_panics_on_malformed_input() {
     }
 
     // Specific typed errors.
-    assert!(matches!(PersistentAddress::decode(&[]), Err(_)));
+    assert!(PersistentAddress::decode(&[]).is_err());
     assert!(matches!(
         PersistentAddress::decode(&[0xFF]),
         Err(DecodeError::UnsupportedVersion(0xFF))
