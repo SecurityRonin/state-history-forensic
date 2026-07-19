@@ -9,3 +9,10 @@ repository = "https://github.com/SecurityRonin/state-history-forensic"
 description = "Zero-dependency [H] state-history vocabulary for the SecurityRonin forensic fleet — KNOWLEDGE-tier types and traits lifting each navigation primitive to a time-indexed variant"
 
 [dependencies]
+# The fleet's FileId, reused verbatim as a component of the [P] evidential-address
+# key (ADR 0009 — FileId relocated into forensicnomicon-core, the zero-dep
+# KNOWLEDGE leaf, so this stays a first-party leaf-onto-leaf dependency, no
+# wrong-direction coupling to forensic-vfs). Path dep is the in-flight coordinated
+# form until the fn-core minor carrying FileId is published; then it becomes a
+# registry pin.
+forensicnomicon-core = { path = "../forensicnomicon/crates/core" }
