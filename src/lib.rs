@@ -1,3 +1,6 @@
+pub mod clock;
+pub mod cohort;
+pub mod epoch;
 /// `[H]` state-history layer — zero-dep KNOWLEDGE-tier types and traits.
 ///
 /// `[H]` is a cross-cutting functor that lifts each base navigation primitive to a
@@ -12,9 +15,5 @@
 /// This crate contains only type definitions and trait signatures. No parsing algorithms,
 /// no file I/O, no binary deserialization. Concrete `[H]` crates (vss-history,
 /// wal-history, git-history, …) implement `HistoricalSource` and depend on this crate.
-
 pub mod identity;
-pub mod clock;
-pub mod epoch;
-pub mod cohort;
 pub mod source;

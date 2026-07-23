@@ -32,9 +32,7 @@ pub enum LsnKind {
     /// ESE/JET database log sequence number (`.jrs` journal).
     EseLsn(u64),
     /// NTFS `$LogFile` LFS record number.
-    NtfsLfs {
-        record: u64,
-    },
+    NtfsLfs { record: u64 },
     /// systemd-journald sequence number (monotonic per boot + seqnum).
     JournaldSeq(u64),
     /// Git commit SHA-1 or SHA-256 (hex string).
@@ -46,14 +44,9 @@ pub enum LsnKind {
     /// Windows Volume Shadow Service shadow copy set identifier (16-byte UUID).
     VssShadowSetId([u8; 16]),
     /// NTFS USN journal record.
-    UsnRecord {
-        usn: u64,
-    },
+    UsnRecord { usn: u64 },
     /// Catch-all for source-specific ordering keys.
-    Custom {
-        name: &'static str,
-        value: Vec<u8>,
-    },
+    Custom { name: &'static str, value: Vec<u8> },
 }
 
 /// Trigger that causes a `MaterializationSafety::AutoPruned` state to be destroyed.
@@ -112,9 +105,7 @@ pub enum MaterializationSafety {
     ///
     /// Examples: `git gc` compacting loose objects, Time Machine deleting the oldest backup,
     /// log rotation deleting `.log.7`, SQLite WAL auto-checkpoint threshold.
-    AutoPruned {
-        trigger: PruneTrigger,
-    },
+    AutoPruned { trigger: PruneTrigger },
 }
 
 /// Structural shape of the ordering between states in a `TemporalCohort`.
@@ -129,9 +120,7 @@ pub enum CohortTopology {
     ///
     /// Examples: SQLite WAL (frame granularity), ESE `.jrs`, NTFS `$LogFile`,
     /// journald sequence, PostgreSQL WAL archive.
-    LinearJournal {
-        lsn_type: LsnKind,
-    },
+    LinearJournal { lsn_type: LsnKind },
 
     /// Ordered by committed transaction boundaries within a journal.
     ///

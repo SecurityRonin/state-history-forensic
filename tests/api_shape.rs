@@ -195,23 +195,21 @@ fn temporal_state_carries_concrete_handle() {
 #[test]
 fn temporal_cohort_with_path_stable_states() {
     use std::path::PathBuf;
-    let states: Vec<TemporalState<PathBuf>> = vec![
-        TemporalState {
-            epoch: EpochTag([0u8; 32]),
-            ordering_key: None,
-            wall_time: None,
-            clock: ClockProvenance {
-                source: ClockSource::FileMetadata,
-                trust_grade: TrustGrade::LocalSubsystem,
-                tamper_resistance: TamperResistance::AdminWritable,
-                ordering_only: false,
-                skew_known: None,
-                authenticated: None,
-            },
-            safety: MaterializationSafety::ReadOnlySafe,
-            handle: PathBuf::from("/mnt/shadow/HarddiskVolumeShadowCopy1"),
+    let states: Vec<TemporalState<PathBuf>> = vec![TemporalState {
+        epoch: EpochTag([0u8; 32]),
+        ordering_key: None,
+        wall_time: None,
+        clock: ClockProvenance {
+            source: ClockSource::FileMetadata,
+            trust_grade: TrustGrade::LocalSubsystem,
+            tamper_resistance: TamperResistance::AdminWritable,
+            ordering_only: false,
+            skew_known: None,
+            authenticated: None,
         },
-    ];
+        safety: MaterializationSafety::ReadOnlySafe,
+        handle: PathBuf::from("/mnt/shadow/HarddiskVolumeShadowCopy1"),
+    }];
     let cohort: TemporalCohort<PathBuf> = TemporalCohort {
         artifact: ArtifactRef {
             claims: vec![IdentityClaim::CanonicalPath {

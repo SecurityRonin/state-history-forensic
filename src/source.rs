@@ -64,8 +64,7 @@ pub trait HistoricalSource {
     fn supported_disciplines(&self) -> &'static [IdentityDiscipline];
 
     /// Enumerate all temporal cohorts matching `query`.
-    fn enumerate(&self, query: &CohortQuery)
-        -> impl Iterator<Item = TemporalCohort<Self::Handle>>;
+    fn enumerate(&self, query: &CohortQuery) -> impl Iterator<Item = TemporalCohort<Self::Handle>>;
 
     /// Acquisition protocol companion for this source type.
     fn acquisition_protocol(&self) -> &dyn AcquisitionProtocol;
