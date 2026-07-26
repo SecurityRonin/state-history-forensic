@@ -12,7 +12,6 @@ description = "Zero-dependency [H] state-history vocabulary for the SecurityRoni
 # The fleet's FileId, reused verbatim as a component of the [P] evidential-address
 # key (ADR 0009 — FileId relocated into forensicnomicon-core, the zero-dep
 # KNOWLEDGE leaf, so this stays a first-party leaf-onto-leaf dependency, no
-# wrong-direction coupling to forensic-vfs). Path dep is the in-flight coordinated
-# form until the fn-core minor carrying FileId is published; then it becomes a
-# registry pin.
-forensicnomicon-core = { path = "../forensicnomicon/crates/core" }
+# wrong-direction coupling to forensic-vfs). Registry pin now that fn-core carrying
+# FileId is published (ADR 0010 — prefer the published crate over a path dep).
+forensicnomicon-core = "1.4.0"
