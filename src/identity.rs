@@ -641,3 +641,41 @@ fn claim_fingerprint(claim: &IdentityClaim) -> Vec<u8> {
         IdentityClaim::PersistentAddress(addr) => addr.canonical_bytes(),
     }
 }
+
+#[cfg(test)]
+mod fingerprint_tests {
+    use super::*;
+
+    // `claim_fingerprint` is invoked by `cohort_key` only for claims that
+    // `claim_matches_discipline` accepts. ApfsFileId / ApplicationGuid /
+    // SigningSubject currently match no discipline, so their fingerprint arms
+    // have no public caller — they are exercised here directly. The fingerprint
+    // is a per-facet identity contribution and its contract is: deterministic
+    // (stable for equal input) and distinct across distinct facets.
+    #[test]
+    fn fingerprint_of_facets_without_a_matching_discipline() {
+        let apfs = IdentityClaim::ApfsFileId {
+            volume_uuid: [7u8; 16],
+            file_id: 42,
+        };
+        let guid = IdentityClaim::ApplicationGuid {
+            app: "com.whatsapp".to_string(),
+            guid: [9u8; 16],
+        };
+        let sign = IdentityClaim::SigningSubject {
+            issuer: "CN=Root CA".to_string(),
+            subject: "CN=App Publisher".to_string(),
+        };
+        for claim in [&apfs, &guid, &sign] {
+            assert_eq!(
+                claim_fingerprint(claim),
+                claim_fingerprint(claim),
+                "fingerprint must be deterministic"
+            );
+            assert!(!claim_fingerprint(claim).is_empty());
+        }
+        assert_ne!(claim_fingerprint(&apfs), claim_fingerprint(&guid));
+        assert_ne!(claim_fingerprint(&guid), claim_fingerprint(&sign));
+        assert_ne!(claim_fingerprint(&apfs), claim_fingerprint(&sign));
+    }
+}
