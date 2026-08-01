@@ -7,17 +7,17 @@ pub enum ClockSource {
     RealTimeClock,
     /// File system metadata (mtime, ctime, atime).
     FileMetadata,
-    /// Record field inside a structured log (EVTX TimeCreated, journald __REALTIME_TIMESTAMP).
+    /// Record field inside a structured log (EVTX `TimeCreated`, journald __`REALTIME_TIMESTAMP`).
     LogRecord,
     /// Network protocol timestamp (HTTP Last-Modified, S3 object last-modified, SMTP Date:).
     NetworkProtocol,
-    /// Application-embedded timestamp (WhatsApp message row, browser history visit_time).
+    /// Application-embedded timestamp (`WhatsApp` message row, browser history `visit_time`).
     ApplicationEmbedded,
     /// Cryptographic transparency log (Sigstore Rekor, RFC3161 TSA).
     TransparencyLog,
     /// TPM measured-boot event log (temporally chained PCR events).
     TpmEventLog,
-    /// Sequence / LSN only — no absolute wall time (SQLite WAL frame, NTFS $LogFile LSN).
+    /// Sequence / LSN only — no absolute wall time (`SQLite` WAL frame, NTFS $`LogFile` LSN).
     SequenceOnly,
     /// Analyst reconstruction from bracketing events.
     Reconstructed,
@@ -31,7 +31,7 @@ pub enum ClockSource {
 /// `SignedImmutable` tamper resistance — same format, different trust.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub enum TrustGrade {
-    /// RFC3161 TSA, Sigstore, server-side WhatsApp timestamp, TPM measured boot.
+    /// RFC3161 TSA, Sigstore, server-side `WhatsApp` timestamp, TPM measured boot.
     ExternallyAttested,
     /// systemd-journald FSS, iOS APFS via Secure Enclave.
     LocallyAttested,

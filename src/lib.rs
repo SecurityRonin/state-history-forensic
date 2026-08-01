@@ -7,7 +7,7 @@ pub mod epoch;
 /// time-indexed variant:
 ///
 /// - `[P^H]` — time-indexed disk (VSS, APFS snapshots, Time Machine, btrfs)
-/// - `[M^H]` — time-indexed memory (hiberfil chain, VMware memory snapshots)
+/// - `[M^H]` — time-indexed memory (hiberfil chain, `VMware` memory snapshots)
 /// - `[L^H]` — time-indexed log (rotated logs, journald sealed epochs)
 /// - `[Q^H]` — time-indexed live query (point-in-time osquery exports)
 /// - `[C^H] ≅ [C]` — Git already encodes its own history; `[H]` on `[C]` is the identity functor.

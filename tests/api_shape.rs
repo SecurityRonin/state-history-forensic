@@ -1,3 +1,5 @@
+#![allow(clippy::unwrap_used, clippy::expect_used)]
+
 use state_history_forensic::{
     clock::{AuthMechanism, ClockProvenance, ClockSource, TamperResistance, TrustGrade},
     cohort::{TemporalCohort, TemporalState},

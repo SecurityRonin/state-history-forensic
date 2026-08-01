@@ -2,6 +2,8 @@
 //! keying, identity matching under each discipline, and `DecodeError` reporting.
 //! Pure construct-and-assert over the public API — no I/O.
 
+#![allow(clippy::unwrap_used, clippy::expect_used)]
+
 use forensicnomicon_core::FileId;
 use state_history_forensic::{
     clock::{ClockProvenance, ClockSource, TamperResistance, TrustGrade},

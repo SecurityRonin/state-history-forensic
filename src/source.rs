@@ -83,7 +83,7 @@ pub trait AcquisitionProtocol {
 
     /// Companion artifacts that must be acquired alongside the primary artifact.
     ///
-    /// Examples: `main.db-wal` + `main.db-shm` for SQLite, all `.jrs` + `.chk` for ESE.
+    /// Examples: `main.db-wal` + `main.db-shm` for `SQLite`, all `.jrs` + `.chk` for ESE.
     fn required_companion_artifacts(&self) -> Vec<String>;
 
     /// Temporal states that will be permanently lost if these steps are skipped.

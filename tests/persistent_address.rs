@@ -6,6 +6,8 @@
 //! versioned length-prefixed binary [`PersistentAddress::canonical_bytes`] is the
 //! correlation/DB key. Host and epoch are deliberately excluded (design §3.2).
 
+#![allow(clippy::unwrap_used, clippy::expect_used)]
+
 use forensicnomicon_core::FileId;
 use state_history_forensic::identity::{
     Allocation, ArtifactRef, DecodeError, IdentityClaim, IdentityDiscipline, PersistentAddress,

@@ -11,7 +11,7 @@ use crate::{
 pub struct Timestamp {
     /// Seconds since Unix epoch (UTC).
     pub secs: i64,
-    /// Subsecond component in nanoseconds \[0, 999_999_999\].
+    /// Subsecond component in nanoseconds \[0, `999_999_999`\].
     pub nanos: u32,
 }
 
@@ -78,13 +78,13 @@ impl<H> TemporalCohort<H> {
     ///
     /// Returns `None` if no state has a `wall_time`.
     pub fn nearest(&self, t: Timestamp) -> Option<&TemporalState<H>> {
+        // `abs_diff` yields the u64 distance without ever forming `wt.secs - t.secs`,
+        // which overflows i64 for evidence-derived extremes.
         self.states
             .iter()
-            .filter(|s| s.wall_time.is_some())
-            .min_by_key(|s| {
-                let wt = s.wall_time.unwrap();
-                (wt.secs - t.secs).unsigned_abs()
-            })
+            .filter_map(|s| Some((s.wall_time?.secs.abs_diff(t.secs), s)))
+            .min_by_key(|&(distance, _)| distance)
+            .map(|(_, s)| s)
     }
 
     /// Epochs present in this cohort, in order.
