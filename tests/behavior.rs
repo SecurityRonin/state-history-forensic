@@ -122,6 +122,24 @@ fn cohort_nearest_none_when_no_wall_times() {
 }
 
 #[test]
+fn cohort_nearest_survives_extreme_wall_times() {
+    // Evidence-derived timestamps are bounded by nothing: a corrupt or forged record
+    // can carry i64::MIN/i64::MAX seconds. Computing the delta as `wt.secs - t.secs`
+    // overflows i64 for such a pair — a debug-build panic, and a silently wrapped
+    // (therefore wrong) distance in release.
+    let c = cohort(vec![
+        state(1, Some(i64::MIN)),
+        state(2, Some(i64::MAX)),
+        state(3, Some(0)),
+    ]);
+    // 0 is nearest to a query at 1; the extremes must not panic on the way there.
+    assert_eq!(c.nearest(Timestamp::from_secs(1)).unwrap().handle, 3);
+    // Query at an extreme itself: distance 0 wins.
+    assert_eq!(c.nearest(Timestamp::from_secs(i64::MIN)).unwrap().handle, 1);
+    assert_eq!(c.nearest(Timestamp::from_secs(i64::MAX)).unwrap().handle, 2);
+}
+
+#[test]
 fn cohort_epochs_yields_states_in_order() {
     let c = cohort(vec![state(1, Some(100)), state(2, Some(200))]);
     let epochs: Vec<EpochTag> = c.epochs().collect();
