@@ -1,6 +1,6 @@
 /// Opaque 32-byte identifier for a single temporal state within a cohort.
 ///
-/// Computed as a hash of (source_id, ordering_key, wall_time). Two states with equal
+/// Computed as a hash of (`source_id`, `ordering_key`, `wall_time`). Two states with equal
 /// `EpochTag` values are considered identical snapshots of the same artifact.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub struct EpochTag(pub [u8; 32]);
@@ -22,7 +22,7 @@ impl EpochTag {
 /// some are ordering-only (LSN, seqnum). The `ClockProvenance.ordering_only` flag records this.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum LsnKind {
-    /// SQLite WAL frame coordinate.
+    /// `SQLite` WAL frame coordinate.
     SqliteWalFrame {
         /// Global frame sequence within the WAL file.
         frame_seq: u32,
@@ -60,7 +60,7 @@ pub enum PruneTrigger {
     SpacePressure,
     /// Explicit operator action (Time Machine oldest backup removed, S3 lifecycle rule).
     Manual,
-    /// Background checkpoint (SQLite auto-checkpoint triggered by write-ahead threshold).
+    /// Background checkpoint (`SQLite` auto-checkpoint triggered by write-ahead threshold).
     AutoCheckpoint,
     Other(String),
 }
@@ -80,7 +80,7 @@ pub enum MaterializationSafety {
     /// Requires a forensic-aware reader. Naively opening with the default library
     /// would destroy the state.
     ///
-    /// Examples: SQLite WAL pre-replay (libsqlite3 auto-checkpoints on open),
+    /// Examples: `SQLite` WAL pre-replay (libsqlite3 auto-checkpoints on open),
     /// ESE journal interpretation without soft-recovery (esentutl /r would replay).
     ///
     /// Rule: use a forensic reader (`chat4n6`, raw-WAL walk) rather than the native library.
@@ -104,7 +104,7 @@ pub enum MaterializationSafety {
     /// The state will be automatically destroyed by a background process.
     ///
     /// Examples: `git gc` compacting loose objects, Time Machine deleting the oldest backup,
-    /// log rotation deleting `.log.7`, SQLite WAL auto-checkpoint threshold.
+    /// log rotation deleting `.log.7`, `SQLite` WAL auto-checkpoint threshold.
     AutoPruned { trigger: PruneTrigger },
 }
 
@@ -118,8 +118,8 @@ pub enum CohortTopology {
 
     /// Totally ordered sequence of states indexed by LSN (no branching).
     ///
-    /// Examples: SQLite WAL (frame granularity), ESE `.jrs`, NTFS `$LogFile`,
-    /// journald sequence, PostgreSQL WAL archive.
+    /// Examples: `SQLite` WAL (frame granularity), ESE `.jrs`, NTFS `$LogFile`,
+    /// journald sequence, `PostgreSQL` WAL archive.
     LinearJournal { lsn_type: LsnKind },
 
     /// Ordered by committed transaction boundaries within a journal.
@@ -127,7 +127,7 @@ pub enum CohortTopology {
     /// Refinement of `LinearJournal`: each state is a fully committed transaction,
     /// not an individual log record. Uncommitted tail frames are tracked separately.
     ///
-    /// Examples: SQLite WAL at `COMMIT`-boundary granularity, ESE at checkpoint granularity.
+    /// Examples: `SQLite` WAL at `COMMIT`-boundary granularity, ESE at checkpoint granularity.
     SubJournalCommits,
 
     /// Directed acyclic graph of states (branching, merging).

@@ -45,16 +45,16 @@ pub enum IdentityClaim {
         mft_record: u64,
         sequence: u16,
     },
-    /// APFS file identifier (volume UUID as 16 bytes + file_id).
+    /// APFS file identifier (volume UUID as 16 bytes + `file_id`).
     ApfsFileId { volume_uuid: [u8; 16], file_id: u64 },
     /// Cryptographic content hash. Stable across copies; equates duplicates.
     ContentHash { algo: HashAlgo, digest: Vec<u8> },
-    /// Application-level record identity (e.g. SQLite rowid, email Message-ID).
+    /// Application-level record identity (e.g. `SQLite` rowid, email Message-ID).
     RecordIdentity {
         schema: SchemaRef,
         primary_key: Vec<u8>,
     },
-    /// Application GUID (e.g. WhatsApp message GUID).
+    /// Application GUID (e.g. `WhatsApp` message GUID).
     ApplicationGuid { app: AppId, guid: [u8; 16] },
     /// Code-signing subject (issuer DN + subject DN, e.g. from Authenticode).
     SigningSubject { issuer: String, subject: String },
@@ -408,7 +408,7 @@ pub enum IdentityDiscipline {
     ContentStable,
     /// Same filesystem object (inode+generation, MFT record+sequence). Detects swaps.
     ObjectStable,
-    /// Same application-level record (rowid, message_id). Detects app reinstalls.
+    /// Same application-level record (rowid, `message_id`). Detects app reinstalls.
     RecordStable,
     /// Same logical artifact across reinstalls (rarely provable without external evidence).
     LogicalStable,
