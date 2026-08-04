@@ -381,14 +381,12 @@ fn decode_error_display_covers_every_variant() {
     }
     assert!(DecodeError::UnsupportedVersion(9).to_string().contains('9'));
     assert!(DecodeError::TrailingBytes(3).to_string().contains('3'));
-    assert!(
-        DecodeError::BadTag {
-            field: "stream",
-            tag: 7
-        }
-        .to_string()
-        .contains("stream")
-    );
+    assert!(DecodeError::BadTag {
+        field: "stream",
+        tag: 7
+    }
+    .to_string()
+    .contains("stream"));
 }
 
 #[test]
