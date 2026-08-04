@@ -10,7 +10,7 @@ checksum = "21800c5e29085274fbb324be30790894481c9c5faf8c659b3d0d994840ca0941"
 
 [[package]]
 name = "state-history-forensic"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "forensicnomicon-core",
 ]
