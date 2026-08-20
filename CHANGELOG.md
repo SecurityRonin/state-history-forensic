@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.2](https://github.com/SecurityRonin/state-history-forensic/compare/state-history-forensic-v0.2.1...state-history-forensic-v0.2.2) - 2026-08-20
+
+### Fixed
+
+- *(gitignore)* unanchor the target rule so nested cargo projects are ignored
+
 ## [0.2.1](https://github.com/SecurityRonin/state-history-forensic/compare/state-history-forensic-v0.2.0...state-history-forensic-v0.2.1) - 2026-08-05
 
 ### Fixed
